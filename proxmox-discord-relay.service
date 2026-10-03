@@ -1,0 +1,21 @@
+[Unit]
+Description=Proxmox naar Discord webhook relay
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=proxmox-relay
+Group=proxmox-relay
+EnvironmentFile=/etc/proxmox-discord-relay/relay.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/python3 /opt/proxmox-discord-relay/relay.py
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target
